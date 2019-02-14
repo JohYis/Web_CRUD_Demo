@@ -1,0 +1,65 @@
+﻿@using System.Data
+@model DataTable
+@{
+  ViewBag.Title = "Home Page";
+}
+@section scripts{
+  <script type="text/javascript"> 
+    function DeleteData(number) {
+      if (confirm("確認刪除Number為" + number + "的資料?")) {
+        $.ajax({
+          url: "@Url.Action("Delete")"
+          , async: true
+          // 寫法一
+          //, contentType: "text/plain"
+          //, data: "number=" + number
+          // 寫法二
+          , contentType: "application/x-www-form-urlencoded"
+          , data: { number: number }
+          , success: function (result, status, xhr) {
+            if (result == "1") {
+              window.location.reload();
+            }
+          }
+          , error: function (xhr, status, error) {
+
+          }
+        });
+      }
+    }
+    $(function () {
+
+    });
+  </script>
+}
+<div class="bd-example-row">
+  <div class="bd-example">
+    <div class="container">
+      @foreach (var dr in Model.AsEnumerable()) {
+        if (dr == Model.AsEnumerable().First()) {
+          <div class="row">
+            @foreach (DataColumn col in Model.Columns) {
+              <div class="col-sm">
+                @col.ToString()
+              </div>
+            }
+            <div class="col-sm">
+              Modify
+            </div>
+          </div>
+        }
+        <div class="row">
+          @foreach (DataColumn col in Model.Columns) {
+            <div class="col-sm">
+              @dr[col.ToString()].ToString()
+            </div>
+          }
+          <div class="col-sm">
+            <a href="@Url.Action("Update", new { RowNumber = dr["Number"].ToString() })">Update</a>
+            <a href="javascript:void(0)" onclick="DeleteData('@dr["Number"].ToString()')">Delete</a>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</div>

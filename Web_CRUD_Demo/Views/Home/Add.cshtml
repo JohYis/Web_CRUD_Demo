@@ -1,0 +1,25 @@
+﻿@model string
+@{
+    ViewBag.Title = "Add";
+}
+@section scripts{
+    <script type="text/javascript">
+        $(function () {
+            var msg = "@Model";
+            if (msg == "1") {
+                alert("新增成功");
+            }
+        });
+    </script>
+}
+<form>
+    <div class="form-group">
+        <label for="exampleInputEmail1">Number</label>
+        <input name="txtNumber" type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="請輸入編號">
+    </div>
+    <div class="form-group">
+        <label for="exampleInputPassword1">Name</label>
+        <input name="txtName" type="text" class="form-control" id="exampleInputPassword1" placeholder="請輸入姓名">
+    </div>
+    <button type="submit" class="btn btn-primary">新增</button>
+</form>
